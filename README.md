@@ -73,3 +73,47 @@ func split(sum int) (x, y int) {
 	return
 }
 ```
+
+## 変数の初期化(variables-with-initializers.go)
+
+- 変数の初期化はvarを使う
+  - var 変数名 型
+- 初期値を入れる場合は=で初期値を指定
+
+```
+var i, j int = 1, 2
+```
+
+## 変数宣言の省略化(short-variables-declairations.go)
+
+- varを使わず、```:=```でも宣言できる
+- ただし関数内のみ
+  - 関数の外ではvarを使うこと
+
+```
+	k := 3
+	c, python, java := true, false, "no!"
+```
+
+## 基本的な型(basic-types.go)
+
+- 真偽値
+  - bool
+  - true / false
+- 文字列
+  - string
+  - "xxxx"
+- 数値
+  - int / int8 / int16 / int32 / int64
+  - uint / uint8 / uint16 / uint32 / uint64 / uintptr
+  - float32 / float64
+  - byte
+  - rune
+  - complex64 / complex128
+
+## ゼロ(zero.go)
+
+- 初期値が与えられない変数は型によってゼロな値がそれぞれ入る
+  - 数値なら0
+  - 文字列なら""
+  - 真偽値ならfalse
