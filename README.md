@@ -145,3 +145,6 @@ var i, j int = 1, 2
   - 型指定がないため、無限制度になる（らしい
 
 参考) https://qiita.com/hkurokawa/items/a4d402d3182dff387674
+
+## For
+
