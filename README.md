@@ -146,7 +146,7 @@ var i, j int = 1, 2
 
 参考) https://qiita.com/hkurokawa/items/a4d402d3182dff387674
 
-## For
+## for
 
 - Cライクだが()不要
 
@@ -180,4 +180,130 @@ for i < 10 {
 for {
 	・・・
 }
+```
+
+## if
+
+- ()は不要
+
+```
+if x < 0 {
+  ・・・
+}
+```
+
+- ifのスコープ内だけで有効な変数を条件の前に指定できる
+  - スコープの外では使えない
+
+```
+if v := 0; x < 0 {
+  ・・・
+}
+```
+
+- elseも使える
+  - ifで宣言された変数はelseでも使える
+
+```
+if v := 0; x < 0 {
+  ・・・
+  return v
+} else {
+  ・・・
+  return v
+}
+```
+
+## エクササイズ：ループと関数
+
+ニュートン法というのがあるらしい、がさっぱりわからない。
+いろいろ調べてみた
+
+```go
+package main
+
+import (
+	"fmt"
+	"math"
+)
+
+func sqrt(x float64) float64 {
+	z := 1.0
+	for i := 0; i < 10; i++ {
+		z -= (z*z - x) / (2 * z)
+		fmt.Println("debug    : ", z)
+	}
+	return z
+}
+
+func main() {
+	fmt.Println("sqrt     : ", sqrt(2))
+	fmt.Println("math.Sqrt: ", math.Sqrt(2))
+}
+```
+
+実行結果
+
+```
+go run excecise-loops-and-functions.go
+debug    :  1.5
+debug    :  1.4166666666666667
+debug    :  1.4142156862745099
+debug    :  1.4142135623746899
+debug    :  1.4142135623730951
+debug    :  1.414213562373095
+debug    :  1.4142135623730951
+debug    :  1.414213562373095
+debug    :  1.4142135623730951
+debug    :  1.414213562373095
+sqrt     :  1.414213562373095
+math.Sqrt:  1.4142135623730951
+```
+
+要は、公式に従って繰り返し計算していけば平方根に近づく、というものらしい
+イケてないのは、10回という上限を設定してしまっているところなのでここを
+「次に値が変化しなくなった (もしくはごくわずかな変化しかしなくなった) 場合にループを停止させます。」という条件をつける
+
+いろいろ調べてみたが
+
+- 前回のzと今回のzを比べて、ごくごく小さい変化になった場合にループを抜ける
+- ごくごく小さい変化の基準を1.0e-6としている
+- 小さい変化の絶対値と上記を比較
+
+ということの様子
+
+```go
+package main
+
+import (
+	"fmt"
+	"math"
+)
+
+func sqrt(x float64) float64 {
+	z := 1.0
+	for diff := 1.0; math.Abs(diff) > 1e-6; {
+		diff = (z*z - x) / (2 * z)
+		z -= diff
+		fmt.Println("debug    : ", z)
+	}
+	return z
+}
+
+func main() {
+	fmt.Println("sqrt     : ", sqrt(2))
+	fmt.Println("math.Sqrt: ", math.Sqrt(2))
+}
+```
+
+実行結果
+
+```
+debug    :  1.5
+debug    :  1.4166666666666667
+debug    :  1.4142156862745099
+debug    :  1.4142135623746899
+debug    :  1.4142135623730951
+sqrt     :  1.4142135623730951
+math.Sqrt:  1.4142135623730951
 ```
