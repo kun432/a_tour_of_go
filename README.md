@@ -307,3 +307,96 @@ debug    :  1.4142135623730951
 sqrt     :  1.4142135623730951
 math.Sqrt:  1.4142135623730951
 ```
+
+## switch
+
+- breakを書く必要はない
+  - 上から下に評価される
+  - 選択されたcaseだけが実行される
+  - 自動的にbreakされる
+
+```
+switch x {
+  case "a":
+    ・・・
+  case "b":
+    ・・・
+  default:
+    ・・・
+}
+```
+
+- switchステートメントに変数を宣言することもできる
+  - もちろんスコープはその中になる
+
+```
+switch x := 0; x {
+  ・・・
+}
+```
+
+- 条件無しで書くこともできる
+  - switch trueと同じこと
+  - if else をシンプルに表現できる
+
+```
+switch {
+  case 0:
+    ・・・
+  case 1:
+    ・・・
+  default:
+    ・・・
+}
+```
+## defer
+
+- 遅延実行
+  - deferに関数を渡す
+  - 呼び出し元の処理の終わり（return）まで遅延
+  - 評価自体はdeferで渡された時点でお行われる
+
+```
+func main() {
+  defer fmt.Println("defer")
+
+  fmt.Println("End")
+}
+```
+
+実行結果
+
+```
+End
+defer
+```
+
+- deferに複数の関数を渡した場合はスタックされる
+  - last-in-first-outで実行される
+
+```
+func main() {
+	fmt.Println("count start")
+	for i := 0; i < 10; i++ {
+		defer fmt.Println(i)
+	}
+	fmt.Println("done")
+}
+```
+
+実行結果
+
+```
+count start
+done
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+```
