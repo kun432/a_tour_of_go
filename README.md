@@ -443,3 +443,6 @@ v := Vertex{1,2}
 fmt.Println(v.X) // 1
 fmt.Println(v.Y) // 2
 ```
+
+- ポインタを使って構造体へアクセスする
+
