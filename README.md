@@ -445,4 +445,51 @@ fmt.Println(v.Y) // 2
 ```
 
 - ポインタを使って構造体へアクセスする
+  - structのフィールドへのアクセスもポインタから行える
+  - ```(*p).X```でもよいし```p.X```でもよい
 
+```
+type Vertex struct {
+  X int
+  Y int
+}
+
+function main() {
+  v := Vertex{1,2}
+  p := &v
+  p.X = 1e9
+  fmt.Println(v)
+}
+```
+
+実行結果
+
+```
+{1000000000 2}
+```
+
+- structリテラル
+  - フィールドの値を```Name: ```で列挙して初期値を与える
+
+```
+type Vertex struct {
+  X, Y int
+}
+
+var (
+  v1 = Vertex{1,2}
+  v2 = Vertex{X:1} // Yは0で初期化される
+  v3 = Vertex{} // XもYも0
+  p = &Vertex{1,2} // *Vertex型のポインタ
+)
+
+func main() {
+  fmt.Println(v1, p, v2, v3)
+}
+```
+
+実行結果
+
+```
+{1 2} &{1 2} {1 0} {0 0}
+```
