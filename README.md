@@ -586,3 +586,55 @@ a[:]
     - 容量が小さければ拡張される
   - ```s = append(s, 1, 2, 3, 4)```
     - 複数まとめてもできる
+
+# レンジ
+
+- スライスやマップでイテレーターのために使う
+- スライスをrangeで繰り返すと、indexと要素のコピーをそれぞれ返す
+
+```
+var pow = []int{1,2,4,8,16,32,64,128}
+
+func main() {
+  for i, v := range pow {
+    // iがindexで、vがスライスの各要素
+  }
+}
+```
+
+- _を使うことでインデックスや値を捨てることができる
+- インデックスだけが必要ならば値は省略できる
+
+```
+for i := range pow {
+  // indexはiでとって、あとは捨てる
+}
+for _, value := range pow {
+  // indexはすてて、値だけvalueでとる
+}
+```
+
+## エクササイズ: スライス
+
+```
+package main
+
+import "golang.org/x/tour/pic"
+
+func Pic(dx, dy int) [][]uint8 {
+	image := make([][]uint8, dy)
+	for y := range image {
+		image[y] = make([]uint8, dx)
+	}
+	for y := 0; y < dy; y++ {
+		for x := 0; x < dx; x++ {
+			image[y][x] = uint8((x + y) / 2)
+		}
+	}
+	return image
+}
+
+func main() {
+	pic.Show(Pic)
+}
+```
