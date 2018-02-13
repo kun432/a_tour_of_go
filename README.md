@@ -668,3 +668,62 @@ var m = map[string]Vertex{
 	},
 }
 ```
+
+- mapに渡すトップレベルの型が単純な型名の場合は要素から推測できる場合省略できる
+
+```
+var m = map[string]Vertex{
+	"Bell Labs": { 40.68433, -74.39967 },
+	"Google": { 37.42202, -122.08408 },
+}
+```
+
+## エクササイズ: マップ
+
+```
+package main
+
+import (
+	"fmt"
+	"strings"
+	"golang.org/x/tour/wc"
+)
+
+func WordCount(s string) map[string]int {
+	m := make(map[string]int)
+	for _, v := range strings.Fields(s) {
+		fmt.Println("DEBUG:", v)
+		m[v]++
+	}
+	return m
+}
+
+func main() {
+	wc.Test(WordCount)
+}
+```
+
+## 関数値
+
+- 関数を変数として使う
+- 関数に関数を渡す、とか、戻り値として関数を返すとか
+
+```
+func compute(fn func(float64, float64) float64) float64 {
+	return fn(3, 4)
+}
+
+func main() {
+	hypot := func(x, y float64) float64 {
+		return math.Sqrt(x*x + y*y)
+	}
+	fmt.Println(hypot(5, 12))
+	fmt.Println(compute(hypot))
+	fmt.Println(compute(math.Pow))
+}
+```
+
+## クロージャ
+
+- 外部から変数を参照する関数
+
