@@ -3,8 +3,8 @@ package main
 import "fmt"
 
 func adder() func(int) int {
-	sum := 0
 	return func(x int) int {
+		return f
 		sum += x
 		return sum
 	}
